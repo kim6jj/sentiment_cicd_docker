@@ -25,3 +25,23 @@ CICD Workflow with Docker
 - docker push kim6jj/app:v1.0 (logged into dockerhub using docker for windows desktop)
 - anyone can now pull from my docker the container app (docker pull kim6jj/app:v1.0)
 
+
+#run and deploy containerized app on AWS fargate (serverless service)
+- go to elastic container service ECR and create a repo /sentiment_analysis
+- using docker image created before, we can push using AWS CLI 
+- configure AWS account credentials to execute AWS commands (grab access key and secret from security credentials)
+- run 'aws configure'
+      - aws ecr get-login-password --region us-west-1 | docker login --username AWS --password stdin xxxxxxxxxxxxxxxxx.com
+- docker tag app:v1   xxxxxxxxxxxxxxxxxxx/sentiment_analysis:latest (repo uri)
+- docker push xxxxxxxxxxxxxxxxxxx/sentiment_analysis:latest (push to repo)
+
+#create cluster
+- within ECR, we now create a cluster with 'Networking only' (to create task definition within cluster to reach via public IP)
+- now create task definition under 'view cluster' and select Fargate as launch type
+- configure with task def name, memory and cpu (1GB, .25 vCPU)
+      - add container we pushed to ECR repo via URI provided within image pushed to ECR repo, also add port mappings '5000 TCP'
+- after creation, select and run task under actions selecting the cluster VPC and subnet
+      - task is now created successfully and we now need to add an inbound rule to sec group to access our application on port 5000 (sec group is stateful so inbound changes automatically reflect to outbound as well)
+- under ENI Id under network section will take you to network interface where security groups is available
+      - under sec group, edit inbound rule and add a custom TCP rule with port 5000 and source to be all (0.0.0.0/0) and save
+      - we can now access our container app via Public IP under network section of task defintion adding port 5000 (x.x.x.x:5000)
