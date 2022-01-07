@@ -45,3 +45,16 @@ CICD Workflow with Docker (Source: Deepak Moonat)
 - under ENI Id under network section will take you to network interface where security groups is available
       - under sec group, edit inbound rule and add a custom TCP rule with port 5000 and source to be all (0.0.0.0/0) and save
       - we can now access our container app via Public IP under network section of task defintion adding port 5000 (x.x.x.x:5000)
+
+#CI/CD Pipeline using AWS CodeCommit, CodeBuild, Pipeline and ECS + Fargate from earlier
+- Create an App Load Balancer ALB in EC2 (to make app scalable + HA)
+- using the task defintition from before, use the same task def to create a Fargate service (auto scaling grp for tasks, defines number of tasks to run across cluster, where they should be running, automatically associates them with a load balancer, and horiztontally scales based one metrics like mem util, etc)
+- Fargate using the same cluster from before - also using the same cluster VPC and appropriate subnets (ex. us-west-1a, us-west-1b)
+- using the ALB we created and add rule in security group to allow TCP 5000
+      - can verify app is running by visiting the DNS name of the ALB in a browser
+
+#Now that the service is running, can build a CI/CD Pipeline
+- AWS CodeCommit is a version control similar to GitHub 
+- create a repo and using IAM attach 'AWSCodeCommitPowerUser' policy to user
+      - also generate HTTPS Git Credentials for AWS CodeCommit and generate
+- 
