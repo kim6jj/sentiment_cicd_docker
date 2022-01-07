@@ -1,5 +1,5 @@
 # sentiment_cicd_docker
-CICD Workflow with Docker
+CICD Workflow with Docker (Source: Deepak Moonat)
 - app.py: Main application
 - train.py: Script to train and save trained model
 - sentiment.tsv: Data file
