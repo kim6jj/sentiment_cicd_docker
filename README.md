@@ -8,7 +8,7 @@ CICD Workflow with Docker
 - Template folder: It contains our web page for application
 - model folder: It contains our trained model
 
-- First create Dockerfile
+#First create Dockerfile
 - FROM python:3.8-slim-buster #python image with environment pre-installed
 - WORKDIR /app        #directory in container to keep code, config, other files
 - COPY . /app         #copy files present in local directory image 'app'
