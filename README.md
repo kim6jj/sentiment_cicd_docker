@@ -57,4 +57,9 @@ CICD Workflow with Docker (Source: Deepak Moonat)
 - AWS CodeCommit is a version control similar to GitHub 
 - create a repo and using IAM attach 'AWSCodeCommitPowerUser' policy to user
       - also generate HTTPS Git Credentials for AWS CodeCommit and generate
-- 
+- Now we can copy the repository URL and clone it on local using git clone then git add (local to staging) and commit (to repository) then push
+
+#AWS CodeBuild
+- next step is to setup CI functionality - CodeBuild compiles source code, runs tests and packages the source code which can be used for deployment
+- to use CodeBuild, need buildspec.yml file that contains commands to compile, test and package code
+      - containerized the application using docker and push it to ECR
